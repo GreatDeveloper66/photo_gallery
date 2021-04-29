@@ -18,5 +18,5 @@ app.use(express.static(path.join(path.resolve(), "client","build")))
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
 })
-const port = process.env.PORT
+const port = process.env.PORT || process.env.LOCAL_PORT
 app.listen(port, () => console.log(`listening on PORT: ${port}`))
