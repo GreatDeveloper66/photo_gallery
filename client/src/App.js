@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import WelcomeScreen from './Components/WelcomeScreenComponents/WelcomeScreen'
 
 
 function App() {
