@@ -1,6 +1,13 @@
+import React from 'react'
 import WelcomeScreen from '../WelcomeScreen'
 import RegisterUserForm from '../Forms/LoginUserForm'
 
-const RegisterScreen = () => <WelcomeScreen form={RegisterUserForm} />
+function LoginUserScreen(props) {
+  return (
+   <WelcomeScreen form={<RegisterUserForm parent={props}/>} />
+  )
 
-export default RegisterScreen
+
+}
+
+export default (LoginUserScreen)
