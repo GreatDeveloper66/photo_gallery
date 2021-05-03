@@ -4,7 +4,7 @@ import LoginUserForm from '../Forms/LoginUserForm'
 
 function LoginUserScreen(props) {
   return (
-   <WelcomeScreen form={<LoginUserForm />} />
+   <WelcomeScreen form={<LoginUserForm />} parent={props} />
   )
 
 
