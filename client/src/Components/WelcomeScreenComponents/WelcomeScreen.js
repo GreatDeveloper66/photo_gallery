@@ -1,6 +1,7 @@
 
 import React from 'react'
 import { Redirect } from 'react-router'
+//import { Redirect } from 'react-router'
 import backgroundImage from '../../Media/backgroundImage.jpg'
 /*
 const style = {
@@ -11,18 +12,22 @@ const style = {
 
 }
 */
-const style = {
-  backgroundColor: 'red',
-  backgroundSize: 'cover',
-  backgrounRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-  height: '100vw',
-  width: '100vw'
-}
+//url(require('../../Media/backgroundImage.jpg'))`,
 
 function WelcomeScreen(props) {
+
+  const bannerStyle =  {
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      height: '100vh',
+      width: '100%',
+      
+    }
+
   return (
-    <div style={style}>
+    <div style= {bannerStyle}>
       {props.form}
     </div>
   )
