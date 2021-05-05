@@ -2,12 +2,13 @@ import React from 'react'
 import WelcomeScreen from '../WelcomeScreen'
 import LoginUserForm from '../Forms/LoginUserForm'
 
-function LoginUserScreen(props) {
+function LoginScreen(props) {
+  console.log(props)
   return (
-   <WelcomeScreen form={<LoginUserForm />} parent={props} />
+   <WelcomeScreen form={<LoginUserForm parent={props} />} />
   )
 
 
 }
 
-export default (LoginUserScreen)
+export default (LoginScreen)
