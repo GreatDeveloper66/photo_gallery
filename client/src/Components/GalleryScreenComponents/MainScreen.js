@@ -1,7 +1,17 @@
 import React, { Component } from "react"
 import { Button } from 'reactstrap'
 import dotenv from 'dotenv'
+import { connect } from "react-redux"
+import LoadRandomPhotosActionDispatcher from "../../Actions/ActionDispatchers/LoadRandomPhotosActionDispatcher"
 dotenv.config()
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadRandomPhotos : () => {
+      dispatch(LoadRandomPhotosActionDispatcher())
+    } 
+  }
+}
 
 class MainScreen extends Component {
 
@@ -11,7 +21,8 @@ class MainScreen extends Component {
   }
 
   handleRandomPhotos() {
-    console.log(process.env.REACT_APP_APIURL)
+    this.props.loadRandomPhotos()
+    console.log(this.props.loadRandomPhotos)
   }
 
   render() {
@@ -26,4 +37,4 @@ class MainScreen extends Component {
   }
 }
 
-export default MainScreen;
+export default connect(null, mapDispatchToProps)(MainScreen)
