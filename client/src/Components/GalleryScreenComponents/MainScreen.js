@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import { Button } from 'reactstrap'
+import dotenv from 'dotenv'
+dotenv.config()
 
 class MainScreen extends Component {
 
@@ -9,7 +11,7 @@ class MainScreen extends Component {
   }
 
   handleRandomPhotos() {
-    console.log('this')
+    console.log(process.env.REACT_APP_APIURL)
   }
 
   render() {
