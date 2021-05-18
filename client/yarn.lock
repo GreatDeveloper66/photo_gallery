@@ -2086,6 +2086,11 @@
   "resolved" "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz"
   "version" "1.1.1"
 
+"@types/content-type@^1.1.3":
+  "integrity" "sha512-pv8VcFrZ3fN93L4rTNIbbUzdkzjEyVMp5mPVjsFfOYTDOZMZiZ8P1dhu+kEv3faYyKzZgLlSvnyQNFg+p/v5ug=="
+  "resolved" "https://registry.npmjs.org/@types/content-type/-/content-type-1.1.3.tgz"
+  "version" "1.1.3"
+
 "@types/eslint@^7.2.6":
   "integrity" "sha512-kUEPnMKrqbtpCq/KTaGFFKAcz6Ethm2EjCoKIDaCmfRBWLbFuTcOJfTlorwbnboXBzahqWLgUp1BQeKHiJzPUQ=="
   "resolved" "https://registry.yarnpkg.com/@types/eslint/-/eslint-7.2.10.tgz"
@@ -4072,7 +4077,7 @@
   dependencies:
     "safe-buffer" "5.1.2"
 
-"content-type@~1.0.4":
+"content-type@^1.0.4", "content-type@~1.0.4":
   "integrity" "sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA=="
   "resolved" "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz"
   "version" "1.0.4"
@@ -12218,6 +12223,14 @@
   dependencies:
     "has-value" "^0.3.1"
     "isobject" "^3.0.0"
+
+"unsplash-js@^7.0.11":
+  "integrity" "sha512-KIr5Plw1DeAKX7rU1mvem2T3CzoDHZMZivzCf/xpFAYAcsJZiUz/z3Paz3alCoI2Cj/Wlx5fKL7jA2Y8woS5bA=="
+  "resolved" "https://registry.npmjs.org/unsplash-js/-/unsplash-js-7.0.11.tgz"
+  "version" "7.0.11"
+  dependencies:
+    "@types/content-type" "^1.1.3"
+    "content-type" "^1.0.4"
 
 "upath@^1.1.1", "upath@^1.1.2", "upath@^1.2.0":
   "integrity" "sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg=="
