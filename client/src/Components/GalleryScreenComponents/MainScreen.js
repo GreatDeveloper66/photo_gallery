@@ -5,6 +5,12 @@ import { connect } from "react-redux"
 import LoadRandomPhotosActionDispatcher from "../../Actions/ActionDispatchers/LoadRandomPhotosActionDispatcher"
 dotenv.config()
 
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     loadRandomPhotos : () => {
@@ -27,14 +33,17 @@ class MainScreen extends Component {
 
   render() {
     return (
+      this.props.loggedIn ? 
       <div>
         <Button onClick = {this.handleRandomPhotos}>
           Random Photos
         </Button>
         WASSSSUPPP!
       </div>
+      :
+      <div> You are not authorized</div>
     );
   }
 }
 
-export default connect(null, mapDispatchToProps)(MainScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen)
