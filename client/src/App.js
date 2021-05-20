@@ -11,9 +11,6 @@ function App() {
     <Switch>
       <Route exact path='/' component={LoginScreen} />
       <Route exact path ='/Register' component={RegisterScreen} />
-      <Route>
-        {localStorage.token ? <MainScreen /> : <Redirect to="/" />}
-      </Route>
       <Route exact path='/MainScreen' component={MainScreen} />
     </Switch>
   </Router>
