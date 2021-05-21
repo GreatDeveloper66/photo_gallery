@@ -23,6 +23,8 @@ const serverApi = unsplash.createApi({
   fetch: nodeFetch
 })
 
+let catPictures = []
+
 serverApi.search.getPhotos({
   query: 'cat',
   page: 1,
@@ -32,8 +34,12 @@ serverApi.search.getPhotos({
 }).then(response => {
     const catPics = new Parser(response)
     console.log(catPics.getFullPics())
+    catPictures = catPics.getFullPics()
 });
 
+app.get('/catPics', (req, res) => {
+  res.send(catPictures)
+})
 
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
