@@ -5,6 +5,7 @@ dotenv.config()
 import path from 'path'
 import bodyparser from 'body-parser'
 import nodeFetch from 'node-fetch';
+import Parser from './helpers/Parser.js'
 
 const app = express()
 
@@ -28,8 +29,10 @@ serverApi.search.getPhotos({
   perPage: 10,
   color: 'green',
   orientation: 'portrait',
-}).then(result => console.log(result.response));
-
+}).then(response => {
+    const catPics = new Parser(response)
+    console.log(catPics.getFullPics())
+});
 
 
 app.get('*', (req,res) => {
