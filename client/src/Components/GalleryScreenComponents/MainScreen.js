@@ -2,19 +2,20 @@ import React, { Component } from "react"
 import { Button } from 'reactstrap'
 import dotenv from 'dotenv'
 import { connect } from "react-redux"
-import LoadRandomPhotosActionDispatcher from "../../Actions/ActionDispatchers/LoadRandomPhotosActionDispatcher"
+import LoadPhotosActionDispatcher from "../../Actions/ActionDispatchers/LoadPhotosActionDispatcher"
 dotenv.config()
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    photos: state.photos
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadRandomPhotos : () => {
-      dispatch(LoadRandomPhotosActionDispatcher())
+    loadPhotos : () => {
+      dispatch(LoadPhotosActionDispatcher())
     } 
   }
 }
@@ -23,22 +24,26 @@ class MainScreen extends Component {
 
   constructor(props) {
     super()
-    this.handleRandomPhotos = this.handleRandomPhotos.bind(this)
+    this.handlePhotos = this.handlePhotos.bind(this)
   }
 
-  handleRandomPhotos() {
-    this.props.loadRandomPhotos()
-    console.log(this.props.loadRandomPhotos)
+  handlePhotos() {
+    this.props.loadPhotos()
+    
+  }
+
+  renderPhotos() {
+    return <div>{this.props.photos.map(phot => <img src={phot} alt="phot"></img>)}</div>
   }
 
   render() {
     return (
       this.props.loggedIn ? 
       <div>
-        <Button onClick = {this.handleRandomPhotos}>
+        <Button onClick = {this.handlePhotos}>
           Random Photos
         </Button>
-        WASSSSUPPP!
+        <div>{this.renderPhotos()}</div>
       </div>
       :
       <div> You are not authorized</div>
