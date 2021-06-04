@@ -6,6 +6,7 @@ import path from 'path'
 import bodyparser from 'body-parser'
 import nodeFetch from 'node-fetch';
 import Parser from './helpers/Parser.js'
+import dBConn from './helpers/dBConn.js'
 
 const app = express()
 
@@ -15,6 +16,9 @@ app.use(bodyparser.urlencoded({ extended: true }))
 app.use(bodyparser.json())
 
 app.use(express.static(path.join(path.resolve(), "client","build")))
+
+const connection = new dBConn()
+connection.addUser({"hello": "hello"})
 
 //app.get('/', (req,res) => res.send('Hello World'))
 const serverApi = unsplash.createApi({

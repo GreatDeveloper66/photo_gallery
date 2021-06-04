@@ -13,3 +13,5 @@ class UserFavorites {
   }
 
 }
+
+export default UserFavorites
