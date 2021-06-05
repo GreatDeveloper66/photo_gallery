@@ -7,6 +7,8 @@ import bodyparser from 'body-parser'
 import nodeFetch from 'node-fetch';
 import Parser from './helpers/Parser.js'
 import dBConn from './helpers/dBConn.js'
+import apiConn from './helpers/apiConn.js'
+import User from './models/User.js'
 
 const app = express()
 
@@ -18,9 +20,11 @@ app.use(bodyparser.json())
 app.use(express.static(path.join(path.resolve(), "client","build")))
 
 const connection = new dBConn()
-connection.addUser({"hello": "hello"})
+const genericUser = new User("genericUser@gmail.com","userNameG","password123$$$")
+connection.addUser(genericUser)
 
 //app.get('/', (req,res) => res.send('Hello World'))
+/*
 const serverApi = unsplash.createApi({
   accessKey: process.env.UNSPLASH_ACCESS_KEY,
   apiUrl: process.env.APIURL,
@@ -40,8 +44,14 @@ serverApi.search.getPhotos({
     console.log(catPics.getFullPics())
     catPictures = catPics.getFullPics()
 });
+*/
+
+
 
 app.get('/catPics', (req, res) => {
+  const apiConnection = new apiConn()
+  console.log(apiConnection)
+  let catPictures = apiConnection.search('cats')
   res.send(catPictures)
 })
 

@@ -19,7 +19,7 @@ export default class dBConn {
       //operation: add - insertOne, delete - 
       switch (operation) {
         case 'add':
-          //collection.insertOne(payLoad)
+          collection.insertOne(payLoad)
           console.log('adding')
           break;
         case 'update':

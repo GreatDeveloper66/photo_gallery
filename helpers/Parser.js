@@ -1,4 +1,4 @@
-export default class Parser {
+class Parser {
   constructor(unsplashResponse) {
     this.unsplashResponse = unsplashResponse
   }
@@ -28,4 +28,4 @@ export default class Parser {
 }
 
 
-//export default (Parser)
+export default (Parser)
