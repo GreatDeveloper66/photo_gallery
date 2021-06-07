@@ -21,9 +21,7 @@ export default class apiConn {
   }
 
   search(term) {
-    let pics = []
-
-    this.connect().search.getPhotos({
+    return this.connect().search.getPhotos({
       query: term,
       page: 1,
       perPage: 10,
@@ -31,9 +29,9 @@ export default class apiConn {
       orientation: 'portrait',
     }).then(response => {
         const catPics = new Parser(response)
-        pics = catPics.getFullPics()
+        let pics = catPics.getFullPics()
+        return pics
     })
-    return pics
   }
 
 

@@ -47,13 +47,22 @@ serverApi.search.getPhotos({
 */
 
 
-
+app.get('/pics/:searchTerm', (req, res) => {
+  let searchTerm = req.params.searchTerm
+  const apiConnection = new apiConn()
+  apiConnection.search(searchTerm).then(result => {
+    res.send(result)
+  })
+})
+/*
 app.get('/catPics', (req, res) => {
   const apiConnection = new apiConn()
   console.log(apiConnection)
   let catPictures = apiConnection.search('cats')
-  res.send(catPictures)
+  console.log("catPics**************" + catPictures)
+  res.send("catPics**************" + catPictures)
 })
+*/
 
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
