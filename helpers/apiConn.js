@@ -1,6 +1,5 @@
 import unsplash from 'unsplash-js'
 import nodeFetch from 'node-fetch';
-import connect  from 'mongodb';
 import Parser from './Parser.js'
 
 
@@ -12,12 +11,11 @@ export default class apiConn {
   }
 
   connect() {
-    const serverApi = unsplash.createApi({
+    return unsplash.createApi({
       accessKey: this.accessKey,
       apiUrl: this.apiUrl,
       fetch: this.fetch
     })
-    return serverApi
   }
 
   search(term) {
@@ -29,8 +27,21 @@ export default class apiConn {
       orientation: 'portrait',
     }).then(response => {
         const catPics = new Parser(response)
-        let pics = catPics.getFullPics()
-        return pics
+        return catPics.getFullPics()
+    }).catch(error => {
+      console.log(error)
+      return []
+    })
+  }
+
+  getPic(picId) {
+    return this.connect().get({
+      'photoId': picId
+    }).then(response => {
+      return response
+    }).catch(error => {
+      console.log(error)
+      return []
     })
   }
 
