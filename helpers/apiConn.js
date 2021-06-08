@@ -34,9 +34,11 @@ export default class apiConn {
     })
   }
 
+  //MnwxOTIzOTR8MHwxfHNlYXJjaHwxfHxjYXRzfGVufDB8MXx8Z3JlZW58MTYyMzE5MzUwMA
+
   getPic(picId) {
-    return this.connect().get({
-      'photoId': picId
+    return this.connect().photos.get({
+      'photoId': `${picId}`
     }).then(response => {
       return response
     }).catch(error => {

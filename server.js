@@ -1,11 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import unsplash from 'unsplash-js'
 dotenv.config()
 import path from 'path'
 import bodyparser from 'body-parser'
-import nodeFetch from 'node-fetch';
-import Parser from './helpers/Parser.js'
 import dBConn from './helpers/dBConn.js'
 import apiConn from './helpers/apiConn.js'
 import User from './models/User.js'
@@ -51,6 +48,14 @@ app.get('/pics/:searchTerm', (req, res) => {
   let searchTerm = req.params.searchTerm
   const apiConnection = new apiConn()
   apiConnection.search(searchTerm).then(result => {
+    res.send(result)
+  })
+})
+
+app.get('/pic/:id', (req,res) => {
+  let id = req.params.id
+  const apiConnection = new apiConn()
+  apiConnection.getPic(id).then(result => {
     res.send(result)
   })
 })
