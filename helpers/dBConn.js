@@ -20,19 +20,15 @@ export default class dBConn {
       switch (operation) {
         case 'add':
           collection.insertOne(payLoad)
-          console.log('adding')
           break;
         case 'update':
-          //collection.updateOne(payLoad)
-          console.log('updating')
+          collection.updateOne(payLoad)
           break;
         case 'delete':
-          //collection.deleteOne(payLoad)
-          console.log('deleting')
+          collection.deleteOne(payLoad)
           break;
         case 'find':
-          //collection.findOne(payLoad)
-          console.log('finding')
+          collection.findOne(payLoad)
           break;
         default:
           
