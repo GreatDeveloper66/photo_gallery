@@ -1,7 +1,9 @@
-class Pic {
-  constructor(url) {
-    this.url = url
-  }
-}
+import * as mongoose from "mongoose";
 
-export default Pic
+const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
+
+const Pic = new Schema({
+  picId: ObjectId,
+  url: String
+})
