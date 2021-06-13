@@ -18,8 +18,17 @@ app.use(bodyparser.json())
 app.use(express.static(path.join(path.resolve(), "client","build")))
 
 const connection = new dBConn()
-const genericUser = new User("genericUser@gmail.com","userNameG","password123$$$")
-connection.addUser(genericUser)
+//const genericUser = new User("snowUser@gmail.com","userNameG","password123$$$")
+//connection.addUser(genericUser)
+
+connection.findUser({"username": "userNameG"}).then(result => {
+  console.log("new user" + result)
+}).catch(err => {
+  console.log(err)
+}).finally(() => {
+  console.log("this is the end")
+})
+
 
 
 app.get('/pics/:searchTerm', (req, res) => {

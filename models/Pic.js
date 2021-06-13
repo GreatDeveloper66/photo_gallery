@@ -1,7 +1,6 @@
 class Pic {
-  constructor(url, author) {
+  constructor(url) {
     this.url = url
-    this.author = author
   }
 }
 

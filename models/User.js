@@ -4,7 +4,6 @@ class User {
     this.username = username
     this.password = password
   }
-  
 }
 
 export default User
