@@ -1,9 +1,10 @@
-class User {
-  constructor(email, username, password) {
-    this.email = email
-    this.username = username
-    this.password = password
-  }
-}
+import * as mongoose from "mongoose";
 
-export default User
+const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
+
+const User = new Schema({
+  email: ObjectId,
+  userName: String,
+  password: String
+})
