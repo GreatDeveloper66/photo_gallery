@@ -9,7 +9,4 @@ const FavoritePicSchema = new Schema({
     userId: ObjectId
 })
 
-const FavoritePicModel = mongoose.model('FavoritePic',FavoritePicSchema)
-
-
-export default FavoritePicModel
+export default FavoritePicSchema
