@@ -9,38 +9,50 @@ import FavoritePicSchema from "../schemas/FavoritePic.js";
 class dbConn {
     constructor() {
         const newConnection = mongoose.createConnection(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {dbName:'photo_gallery'})
-        const userModel = newConnection.model('User', UserSchema)
-        const picModel = newConnection.model('Pic', PicSchema)
-        const favoritePicModel = newConnection.model('FavoritePic', FavoritePicSchema)
 
         this.connection = newConnection
-        this.user =  new userModel()
-        this.pic = new picModel()
-        this.favorite = new favoritePicModel()
+        this.userModel =  newConnection.model('User', UserSchema)
+        this.picModel = newConnection.model('Pic', PicSchema)
+        this.favoritePicModel = newConnection.model('FavoritePic', FavoritePicSchema)
     }
 
     addPic(url) {
-        this.pic.set("url",url)
+        const picModel = this.connection.model('Pic', PicSchema)
+        const newPic = new picModel()
+        newPic.set("url",url)
 
-        this.pic.save().then(savedDoc => {
+        newPic.save().then(savedDoc => {
             console.log(savedDoc)
         }).catch(err => {
             console.log(err)
         }).finally(() => {
-            mongoose.disconnect()
+            this.connection.close().then(result => {
+                console.log(result)
+            }).catch(err => {
+                console.log(err)
+            })
         })
 
     }
 
-    deletePic(url) {
-        this.pic.set("url",url)
-        this.pic.deleteOne()
+    deletePic(picUrl) {
+        const picModel = this.connection.model('Pic', PicSchema)
+        picModel.deleteOne({url: picUrl}).then(result => {
+            console.log(result)
+        }).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            this.connection.close().then(result => {
+                console.log(result)
+            }).catch(err => {
+                console.log(err)
+            })
+        })
     }
-
 }
 
 const newConnection = new dbConn()
-console.log('hello')
+console.log('hellooo')
 newConnection.deletePic('url3333')
 
 /*
