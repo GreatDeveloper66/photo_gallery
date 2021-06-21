@@ -53,6 +53,16 @@ class dbConn {
         const picModel = this.connection.model('Pic', PicSchema)
         const foundPic = picModel.findOne({url: picUrl}).exec()
         foundPic.then(result => {
+            console.log("foundit" + result._id)
+        }).catch(err => {
+            console.log("error" + err)
+        })
+    }
+
+    findPicById(picId) {
+        const picModel = this.connection.model('Pic', PicSchema)
+        const foundPic = picModel.findOne({_id: picId}).exec()
+        foundPic.then(result => {
             console.log("foundit" + result)
         }).catch(err => {
             console.log("error" + err)
@@ -72,8 +82,9 @@ class dbConn {
 }
 
 const newConnection = new dbConn()
-newConnection.addPic('url444')
+//newConnection.addPic('url444')
 newConnection.findPic('url444')
+newConnection.findPicById("60d10bc9da19103d5c9b86f5")
 
 //newConnection.updatePic('url444','url555')
 //newConnection.deletePic('url444')
