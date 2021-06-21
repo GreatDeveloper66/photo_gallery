@@ -9,7 +9,6 @@ import FavoritePicSchema from "../schemas/FavoritePic.js";
 class dbConn {
     constructor() {
         const newConnection = mongoose.createConnection(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {dbName:'photo_gallery'})
-
         this.connection = newConnection
         this.userModel =  newConnection.model('User', UserSchema)
         this.picModel = newConnection.model('Pic', PicSchema)
@@ -59,41 +58,29 @@ class dbConn {
             console.log("error" + err)
         })
     }
-}
 
-const newConnection = new dbConn()
-console.log('hellooo')
-newConnection.addPic('url3333')
-newConnection.findPic('url3333')
-
-/*
-class dbConn {
-    start() {
-        mongoose.connect(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false,
-            userCreateIndex: true
-        })
-    }
-    addPic(url) {
-        this.start()
-        const newPic = new PicModel()
-        newPic.set("url",url)
-        newPic.save().then(savedDoc => {
-            console.log(savedDoc)
+    updatePic(oldUrl,newUrl) {
+        const picModel = this.connection.model('Pic', PicSchema)
+        const hello = picModel.updateOne({url: oldUrl},{url: newUrl}).exec()
+        hello.then(result => {
+            console.log(result)
         }).catch(err => {
             console.log(err)
-        }).finally(() => {
-            mongoose.disconnect()
         })
     }
 
 }
 
 const newConnection = new dbConn()
-newConnection.addPic('url22')
-*/
+newConnection.addPic('url444')
+newConnection.findPic('url444')
+
+//newConnection.updatePic('url444','url555')
+//newConnection.deletePic('url444')
+//newConnection.deletePic('url555')
+
+
+
 
 
 
