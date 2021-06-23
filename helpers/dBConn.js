@@ -74,18 +74,28 @@ class dbConn {
         favorite.set("picId", picId)
         return favorite.save()
     }
+    findFavoriteById(favoriteId) {
+        const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
+        return favoritePicModel.findOne({_id: favoriteId}).exec()
+    }
 }
 
 const newConnection = new dbConn()
 //newConnection.addPic('url444')
 //newConnection.findPic('url444')
 //newConnection.findPicById("60d10bc9da19103d5c9b86f5")
+/*
 newConnection.addFavorite(mongoose.Types.ObjectId(33), mongoose.Types.ObjectId(44)).then(r =>  {
     console.log(r)
 }).catch(err => {
     console.log(err)
 })
-
+*/
+newConnection.findFavoriteById( mongoose.Types.ObjectId('60d3bf646d23583f90779dd3')).then(result => {
+    console.log("result" + result)
+}).catch(err => {
+    console.log(err)
+})
 //newConnection.updatePic('url444','url555')
 //newConnection.deletePic('url444')
 //newConnection.deletePic('url555')
