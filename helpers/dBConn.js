@@ -19,18 +19,7 @@ class dbConn {
         const picModel = this.connection.model('Pic', PicSchema)
         const newPic = new picModel()
         newPic.set("url",url)
-
-        newPic.save().then(savedDoc => {
-            console.log(savedDoc)
-        }).catch(err => {
-            console.log(err)
-        }).finally(() => {
-            this.connection.close().then(result => {
-                console.log(result)
-            }).catch(err => {
-                console.log(err)
-            })
-        })
+        return newPic.save()
 
     }
 
@@ -71,20 +60,31 @@ class dbConn {
 
     updatePic(oldUrl,newUrl) {
         const picModel = this.connection.model('Pic', PicSchema)
-        const hello = picModel.updateOne({url: oldUrl},{url: newUrl}).exec()
-        hello.then(result => {
+        const pic = picModel.updateOne({url: oldUrl},{url: newUrl}).exec()
+        pic.then(result => {
             console.log(result)
         }).catch(err => {
             console.log(err)
         })
     }
-
+    addFavorite(userId, picId) {
+        const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
+        const favorite = new favoritePicModel()
+        favorite.set("userId", userId)
+        favorite.set("picId", picId)
+        return favorite.save()
+    }
 }
 
 const newConnection = new dbConn()
 //newConnection.addPic('url444')
-newConnection.findPic('url444')
-newConnection.findPicById("60d10bc9da19103d5c9b86f5")
+//newConnection.findPic('url444')
+//newConnection.findPicById("60d10bc9da19103d5c9b86f5")
+newConnection.addFavorite(mongoose.Types.ObjectId(33), mongoose.Types.ObjectId(44)).then(r =>  {
+    console.log(r)
+}).catch(err => {
+    console.log(err)
+})
 
 //newConnection.updatePic('url444','url555')
 //newConnection.deletePic('url444')
