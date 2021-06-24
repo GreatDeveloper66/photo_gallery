@@ -67,7 +67,7 @@ class dbConn {
             console.log(err)
         })
     }
-    addFavorite(userId, picId) {
+    addFavoritePic(userId, picId) {
         const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
         const favorite = new favoritePicModel()
         favorite.set("userId", userId)
@@ -81,6 +81,15 @@ class dbConn {
     deleteFavoritePic(userId, picId) {
         const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
         return favoritePicModel.findOneAndDelete({userId: userId, picId: picId})
+    }
+
+    addUser(email, username, password) {
+        const userModel = this.connection.model('User', UserSchema)
+        const newUser = new userModel()
+        newUser.set("email",email)
+        newUser.set("username",username)
+        newUser.set("password",password)
+        return newUser.save()
     }
 }
 
