@@ -2,15 +2,12 @@ import dotenv from 'dotenv'
 dotenv.config({path:'../.env'})
 import mongoose from 'mongoose'
 import UserSchema from '../schemas/User.js'
-//import PicSchema from '../schemas/Pic.js'
-//import FavoritePic from '../schemas/FavoritePic.js'
-//import FavoritePicSchema from "../schemas/FavoritePic.js";
 
 class dbConn {
     constructor() {
-        const newConnection = mongoose.createConnection(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {dbName:'photo_gallery'})
+        const newConnection = mongoose.createConnection(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {dbName: 'photo_gallery'})
         this.connection = newConnection
-        this.userModel =  newConnection.model('User', UserSchema)
+        this.userModel = newConnection.model('User', UserSchema)
         //this.picModel = newConnection.model('Pic', PicSchema)
         //this.favoritePicModel = newConnection.model('FavoritePic', FavoritePicSchema)
     }
@@ -18,7 +15,7 @@ class dbConn {
     addUser(email, username, password) {
         const userModel = this.connection.model('User', UserSchema)
         const newUser = new userModel()
-        newUser.set("username",username)
+        newUser.set("username", username)
         newUser.set("email", email)
         newUser.set("password", password)
         return newUser.save()
@@ -38,7 +35,7 @@ class dbConn {
     updateUser(userId, newUser) {
         const userModel = this.connection.model('User', UserSchema)
         this.findUser(userId).then(foundUser => {
-            userModel.updateOne(foundUser,newUser).then(result => {
+            userModel.updateOne(foundUser, newUser).then(result => {
                 console.log(result)
             }).catch(err => {
                 console.log(err)
@@ -53,9 +50,9 @@ class dbConn {
         this.findUser(userId).then(foundUser => {
             let newUser = foundUser
             let foundPhotos = newUser.get("photos")
-            foundPhotos = foundPhotos.push(url)
-            newUser.set("photos",foundPhotos)
-            userModel.updateOne(foundUser,newUser)
+            foundPhotos = [...foundPhotos, url]
+            newUser.set("photos", foundPhotos)
+            newUser.save()
         })
     }
 
@@ -64,22 +61,14 @@ class dbConn {
         this.findUser(userId).then(foundUser => {
             let newUser = foundUser
             let foundPhotos = newUser.get("photos")
-            foundPhotos = foundPhotos.filter(element => element !== url)
-            newUser.set("photos",foundPhotos)
-            userModel.updateOne(foundUser,newUser)
+            foundPhotos = foundPhotos.filter(elem => elem !== url)
+            newUser.set("photos", foundPhotos)
+            newUser.save()
         })
     }
-
-
-
-
 }
 
-const newConnection = new dbConn()
-
-
-
-
+export default dbConn
 
 
 

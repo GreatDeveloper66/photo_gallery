@@ -5,7 +5,8 @@ import path from 'path'
 import bodyparser from 'body-parser'
 import dBConn from './helpers/dBConn.js'
 import apiConn from './helpers/apiConn.js'
-import User from './models/User.js'
+import mongoose from "mongoose";
+
 
 
 const app = express()
@@ -18,16 +19,7 @@ app.use(bodyparser.json())
 app.use(express.static(path.join(path.resolve(), "client","build")))
 
 const connection = new dBConn()
-//const genericUser = new User("snowUser@gmail.com","userNameG","password123$$$")
-//connection.addUser(genericUser)
 
-connection.findUser({"username": "userNameG"}).then(result => {
-  console.log("new user" + result)
-}).catch(err => {
-  console.log(err)
-}).finally(() => {
-  console.log("this is the end")
-})
 
 app.post('/pics/:url',(req,res) => {
   const newConnection = new dbConn()
@@ -54,6 +46,14 @@ app.get('/pic/:id', (req,res) => {
   })
 })
 
+app.get('/user/:id', (req,res) => {
+  let id = mongoose.Types.ObjectId(req.params.id)
+  connection.findUser(id).then(foundUser => {
+    res.send(foundUser)
+  }).catch(err => {
+    res.send(err)
+  })
+})
 
 
 app.get('*', (req,res) => {
