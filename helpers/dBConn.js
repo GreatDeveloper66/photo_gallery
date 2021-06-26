@@ -72,137 +72,13 @@ class dbConn {
 
 
 
-/*
-    addPic(url) {
-        const picModel = this.connection.model('Pic', PicSchema)
-        const newPic = new picModel()
-        newPic.set("url",url)
-        return newPic.save()
-
-    }
-
-    deletePic(picUrl) {
-        const picModel = this.connection.model('Pic', PicSchema)
-        picModel.deleteOne({url: picUrl}).then(result => {
-            console.log(result)
-        }).catch(err => {
-            console.log(err)
-        }).finally(() => {
-            this.connection.close().then(result => {
-                console.log(result)
-            }).catch(err => {
-                console.log(err)
-            })
-        })
-    }
-
-    findPic(picUrl) {
-        const picModel = this.connection.model('Pic', PicSchema)
-        const foundPic = picModel.findOne({url: picUrl}).exec()
-        foundPic.then(result => {
-            console.log("foundit" + result._id)
-        }).catch(err => {
-            console.log("error" + err)
-        })
-    }
-
-    findPicById(picId) {
-        const picModel = this.connection.model('Pic', PicSchema)
-        const foundPic = picModel.findOne({_id: picId}).exec()
-        foundPic.then(result => {
-            console.log("foundit" + result)
-        }).catch(err => {
-            console.log("error" + err)
-        })
-    }
-
-    updatePic(oldUrl,newUrl) {
-        const picModel = this.connection.model('Pic', PicSchema)
-        const pic = picModel.updateOne({url: oldUrl},{url: newUrl}).exec()
-        pic.then(result => {
-            console.log(result)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
-    addFavoritePic(userId, picId) {
-        const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
-        const favorite = new favoritePicModel()
-        favorite.set("userId", userId)
-        favorite.set("picId", picId)
-        return favorite.save()
-    }
-    findFavoriteById(favoriteId) {
-        const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
-        return favoritePicModel.findOne({_id: favoriteId}).exec()
-    }
-    deleteFavoritePic(userId, picId) {
-        const favoritePicModel = this.connection.model('FavoritePic', FavoritePicSchema)
-        return favoritePicModel.findOneAndDelete({userId: userId, picId: picId})
-    }
-
-    addUser(email, username, password) {
-        const userModel = this.connection.model('User', UserSchema)
-        const newUser = new userModel()
-        newUser.set("email",email)
-        newUser.set("username",username)
-        newUser.set("password",password)
-        return newUser.save()
-    }
-
-    findUserById(userId) {
-        const userModel = this.connection.model('User', UserSchema)
-        return userModel.findOne({_id: userId}).exec()
-    }
-
-    updateUserObj(oldUser,newUser) {
-        const userModel = this.connection.model('User', UserSchema)
-        return userModel.updateOne(
-            {email: oldUser.email, userName: oldUser.userName, password: oldUser.password},
-            {email: newUser.email, userName: newUser.email, password: newUser.password}).exec()
-    }
-
-    updateUser(id, email,userName,password) {
-        this.findUserById(id).then(user => {
-            const oldUser = user
-            const newUser = {email: email, userName: userName, password: password }
-            return this.updateUserObj(oldUser,newUser)
-        })
-    }
-    */
 
 }
 
 const newConnection = new dbConn()
-newConnection.findUser(mongoose.Types.ObjectId('60d79f10d2f97f69984971b8')).then(found => {
-    console.log(found)
-}).catch(err => {
-    console.log(err)
-})
 
-//newConnection.addPic('url444')
-//newConnection.findPic('url444')
-//newConnection.findPicById("60d10bc9da19103d5c9b86f5")
-/*
-newConnection.addFavorite(mongoose.Types.ObjectId(33), mongoose.Types.ObjectId(44)).then(r =>  {
-    console.log(r)
-}).catch(err => {
-    console.log(err)
-})
 
-newConnection.findFavoriteById( mongoose.Types.ObjectId('60d3bf646d23583f90779dd3')).then(result => {
-    console.log("result" + result)
-}).catch(err => {
-    console.log(err)
-})
-*/
-//newConnection.deleteFavoritePic(mongoose.Types.ObjectId('000000216d23583f90779dd1'), mongoose.Types.ObjectId('0000002c6d23583f90779dd2'))
-    //.then(result => {console.log(result)})
-    //.catch(err => {console.log(err)})
 
-//newConnection.updatePic('url444','url555')
-//newConnection.deletePic('url444')
-//newConnection.deletePic('url555')
 
 
 
