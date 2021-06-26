@@ -71,6 +71,14 @@ app.patch('/users/:id',(req,res) => {
   })
 })
 
+app.delete('/users/:id', (req,res) => {
+  const id = mongoose.Types.ObjectId(req.params.id)
+  connection.deleteUser(id).then(r => {
+    res.sendStatus(200)
+  }).catch(err => {
+    res.sendStatus(400)
+  })
+})
 
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
