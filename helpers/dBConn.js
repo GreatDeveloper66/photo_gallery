@@ -174,12 +174,12 @@ class dbConn {
 }
 
 const newConnection = new dbConn()
-newConnection.deleteUser(mongoose.Types.ObjectId('60d79c9d7f94ec26b4f8ee95')).then(result => {
-    console.log(result)
+newConnection.findUser(mongoose.Types.ObjectId('60d79f10d2f97f69984971b8')).then(found => {
+    console.log(found)
 }).catch(err => {
     console.log(err)
 })
-//newConnection.addUser("gmail@gmail.com","username","pasword")
+
 //newConnection.addPic('url444')
 //newConnection.findPic('url444')
 //newConnection.findPicById("60d10bc9da19103d5c9b86f5")
