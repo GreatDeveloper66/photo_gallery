@@ -45,6 +45,14 @@ app.get('/user/:id', (req,res) => {
   })
 })
 
+app.post('/users',(req,res) => {
+  connection.addUser(req.body.email, req.body.username, req.body.password).then(r => {
+    res.sendStatus(200)
+  }).catch(err => {
+    res.sendStatus(400)
+  })
+})
+
 
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
