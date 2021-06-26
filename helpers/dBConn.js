@@ -32,6 +32,11 @@ class dbConn {
         return userModel.deleteOne({_id: userId})
     }
 
+    updateUser(oldUser, newUser) {
+        const userModel = this.connection.model('User', UserSchema)
+        return userModel.updateOne(oldUser,newUser)
+    }
+/*
     updateUser(userId, newUser) {
         const userModel = this.connection.model('User', UserSchema)
         this.findUser(userId).then(foundUser => {
@@ -44,6 +49,8 @@ class dbConn {
             console.log(err)
         })
     }
+
+ */
 
     addFavorite(userId, url) {
         const userModel = this.connection.model('User', UserSchema)

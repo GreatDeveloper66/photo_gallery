@@ -37,7 +37,7 @@ app.get('/pic/:id', (req,res) => {
 })
 
 app.get('/user/:id', (req,res) => {
-  let id = mongoose.Types.ObjectId(req.params.id)
+  const id = mongoose.Types.ObjectId(req.params.id)
   connection.findUser(id).then(foundUser => {
     res.send(foundUser)
   }).catch(err => {
@@ -48,6 +48,24 @@ app.get('/user/:id', (req,res) => {
 app.post('/users',(req,res) => {
   connection.addUser(req.body.email, req.body.username, req.body.password).then(r => {
     res.sendStatus(200)
+  }).catch(err => {
+    res.sendStatus(400)
+  })
+})
+
+app.patch('/users/:id',(req,res) => {
+  const id = mongoose.Types.ObjectId(req.params.id)
+  const newUser = {
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password
+  }
+  connection.findUser(id).then(result => {
+    connection.updateUser(result, newUser).then(r => {
+      res.sendStatus(200)
+    }).catch(err => {
+      res.sendStatus(400)
+    })
   }).catch(err => {
     res.sendStatus(400)
   })
