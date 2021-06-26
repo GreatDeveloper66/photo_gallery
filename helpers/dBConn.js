@@ -91,6 +91,26 @@ class dbConn {
         newUser.set("password",password)
         return newUser.save()
     }
+
+    findUserById(userId) {
+        const userModel = this.connection.model('User', UserSchema)
+        return userModel.findOne({_id: userId}).exec()
+    }
+
+    updateUserObj(oldUser,newUser) {
+        const userModel = this.connection.model('User', UserSchema)
+        return userModel.updateOne(
+            {email: oldUser.email, userName: oldUser.userName, password: oldUser.password},
+            {email: newUser.email, userName: newUser.email, password: newUser.password}).exec()
+    }
+
+    updateUser(id, email,userName,password) {
+        this.findUserById(id).then(user => {
+            const oldUser = user
+            const newUser = {email: email, userName: userName, password: password }
+            return this.updateUserObj(oldUser,newUser)
+        })
+    }
 }
 
 const newConnection = new dbConn()
@@ -110,9 +130,9 @@ newConnection.findFavoriteById( mongoose.Types.ObjectId('60d3bf646d23583f90779dd
     console.log(err)
 })
 */
-newConnection.deleteFavoritePic(mongoose.Types.ObjectId('000000216d23583f90779dd1'), mongoose.Types.ObjectId('0000002c6d23583f90779dd2'))
-    .then(result => {console.log(result)})
-    .catch(err => {console.log(err)})
+//newConnection.deleteFavoritePic(mongoose.Types.ObjectId('000000216d23583f90779dd1'), mongoose.Types.ObjectId('0000002c6d23583f90779dd2'))
+    //.then(result => {console.log(result)})
+    //.catch(err => {console.log(err)})
 
 //newConnection.updatePic('url444','url555')
 //newConnection.deletePic('url444')
