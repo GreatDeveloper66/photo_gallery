@@ -20,16 +20,6 @@ app.use(express.static(path.join(path.resolve(), "client","build")))
 
 const connection = new dBConn()
 
-
-app.post('/pics/:url',(req,res) => {
-  const newConnection = new dbConn()
-  newConnection.addPic(req.params.url).then(savedPic => {
-    res.send(savedPic)
-  }).catch(err => {
-    res.send(err)
-  })
-})
-
 app.get('/pics/:searchTerm', (req, res) => {
   let searchTerm = req.params.searchTerm
   const apiConnection = new apiConn()
