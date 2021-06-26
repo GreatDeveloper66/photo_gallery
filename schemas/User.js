@@ -7,7 +7,8 @@ const UserSchema = new Schema({
   userId: ObjectId,
   email: String,
   userName: String,
-  password: String
+  password: String,
+  photos: []
 })
 
 export default UserSchema
