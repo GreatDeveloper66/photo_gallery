@@ -5,7 +5,8 @@ import path from 'path'
 import bodyparser from 'body-parser'
 import dBConn from './helpers/dBConn.js'
 import apiConn from './helpers/apiConn.js'
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+import jwt from 'json-web-token'
 
 
 const app = express()
