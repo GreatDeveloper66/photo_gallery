@@ -36,6 +36,11 @@ class dbConn {
         const userModel = this.connection.model('User', UserSchema)
         return userModel.updateOne(oldUser,newUser)
     }
+
+    loginUser(username, password) {
+        const userModel = this.connection.model('User', UserSchema)
+        return userModel.findOne({username: username, password: password }).exec()
+    }
 }
 
 export default dbConn
