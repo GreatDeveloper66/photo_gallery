@@ -8,7 +8,6 @@ import apiConn from './helpers/apiConn.js'
 import mongoose from "mongoose";
 
 
-
 const app = express()
 
 app.use(express.urlencoded({ extended: true }));
@@ -80,6 +79,33 @@ app.delete('/users/:id', (req,res) => {
   })
 })
 
+app.get('/users/:id/favorites', (req,res) => {
+  const id = mongoose.Types.ObjectId(req.params.id)
+  connection.findUser(id).then(foundUser => {
+    const photos = foundUser.get("photos")
+    res.send({status: 200, photos: photos})
+  }).catch(err => {
+    res.send(err)
+  })
+})
+
+app.post('/users/:id/favorites/:url',(req,res) => {
+  const id = mongoose.Types.ObjectId(req.params.id)
+  const photoUrl = req.params.url
+  connection.findUser(id).then(foundUser => {
+    let newUser = foundUser
+    let foundPhotos = newUser.get("photos")
+    foundPhotos = [...foundPhotos, photoUrl]
+    newUser.set("photos", foundPhotos)
+    newUser.save().then(suc => {
+      res.sendStatus(200)
+    }).catch(err => {
+      res.send(err)
+    })
+  }).catch(err => {
+    res.send(err)
+  })
+})
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
 })

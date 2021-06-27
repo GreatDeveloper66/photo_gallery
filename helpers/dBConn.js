@@ -53,7 +53,6 @@ class dbConn {
  */
 
     addFavorite(userId, url) {
-        const userModel = this.connection.model('User', UserSchema)
         this.findUser(userId).then(foundUser => {
             let newUser = foundUser
             let foundPhotos = newUser.get("photos")
@@ -64,7 +63,7 @@ class dbConn {
     }
 
     removeFavorite(userId, url) {
-        const userModel = this.connection.model('User', UserSchema)
+
         this.findUser(userId).then(foundUser => {
             let newUser = foundUser
             let foundPhotos = newUser.get("photos")
