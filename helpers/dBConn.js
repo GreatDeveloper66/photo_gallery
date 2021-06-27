@@ -2,14 +2,11 @@ import dotenv from 'dotenv'
 dotenv.config({path:'../.env'})
 import mongoose from 'mongoose'
 import UserSchema from '../schemas/User.js'
+import TokenSchema from '../schemas/Token.js'
 
 class dbConn {
     constructor() {
-        const newConnection = mongoose.createConnection(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {dbName: 'photo_gallery'})
-        this.connection = newConnection
-        this.userModel = newConnection.model('User', UserSchema)
-        //this.picModel = newConnection.model('Pic', PicSchema)
-        //this.favoritePicModel = newConnection.model('FavoritePic', FavoritePicSchema)
+        this.connection = mongoose.createConnection(process.env.MONGO_LOCAL_CONN || process.env.MONGODB_URL, {dbName: 'photo_gallery'})
     }
 
     addUser(email, username, password) {
@@ -40,6 +37,18 @@ class dbConn {
     loginUser(username, password) {
         const userModel = this.connection.model('User', UserSchema)
         return userModel.findOne({username: username, password: password }).exec()
+    }
+
+    addToken(token) {
+        const tokenModel = this.connection.model('Token', TokenSchema)
+        const newToken = new tokenModel()
+        newToken.set("token",token)
+        return newToken.save()
+    }
+
+    deleteToken(token) {
+        const tokenModel = this.connection.model('Token', TokenSchema)
+        return tokenModel.deleteOne({token: token})
     }
 }
 

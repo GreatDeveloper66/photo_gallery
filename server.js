@@ -43,14 +43,27 @@ app.post('/login', (req,res) => {
     const id = foundUser.get("_id")
     const user = {userId: id }
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '20m'})
-    res.send({ accessToken: accessToken })
+    connection.addToken(accessToken).then(() => {
+      res.send({ accessToken: accessToken })
+    }).catch(() => {
+      res.sendStatus(401)
+    })
+
   }).catch(() => {
-    res.sendStatus(404)
+    res.sendStatus(401)
   })
 })
-app.delete('/logout', (req,res) => {
 
+app.delete('/logout', (req,res) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  connection.deleteToken(token).then(() => {
+    res.sendStatus(200)
+  }).catch(() => {
+    res.sendStatus(500)
+  })
 })
+
 app.get('/pics/:searchTerm', (req, res) => {
   let searchTerm = req.params.searchTerm
   const apiConnection = new apiConn()
