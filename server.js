@@ -89,13 +89,31 @@ app.get('/users/:id/favorites', (req,res) => {
   })
 })
 
-app.post('/users/:id/favorites/:url',(req,res) => {
+app.patch('/users/:id/favorites/:url',(req,res) => {
   const id = mongoose.Types.ObjectId(req.params.id)
   const photoUrl = req.params.url
   connection.findUser(id).then(foundUser => {
     let newUser = foundUser
     let foundPhotos = newUser.get("photos")
     foundPhotos = [...foundPhotos, photoUrl]
+    newUser.set("photos", foundPhotos)
+    newUser.save().then(suc => {
+      res.sendStatus(200)
+    }).catch(err => {
+      res.send(err)
+    })
+  }).catch(err => {
+    res.send(err)
+  })
+})
+
+app.patch('/users/:id/unfavorites/:url',(req,res) => {
+  const id = mongoose.Types.ObjectId(req.params.id)
+  const photoUrl = req.params.url
+  connection.findUser(id).then(foundUser => {
+    let newUser = foundUser
+    let foundPhotos = newUser.get("photos")
+    foundPhotos = foundPhotos.filter(elem => elem !== photoUrl)
     newUser.set("photos", foundPhotos)
     newUser.save().then(suc => {
       res.sendStatus(200)
