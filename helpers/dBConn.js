@@ -36,42 +36,6 @@ class dbConn {
         const userModel = this.connection.model('User', UserSchema)
         return userModel.updateOne(oldUser,newUser)
     }
-/*
-    updateUser(userId, newUser) {
-        const userModel = this.connection.model('User', UserSchema)
-        this.findUser(userId).then(foundUser => {
-            userModel.updateOne(foundUser, newUser).then(result => {
-                console.log(result)
-            }).catch(err => {
-                console.log(err)
-            })
-        }).catch(err => {
-            console.log(err)
-        })
-    }
-
- */
-
-    addFavorite(userId, url) {
-        this.findUser(userId).then(foundUser => {
-            let newUser = foundUser
-            let foundPhotos = newUser.get("photos")
-            foundPhotos = [...foundPhotos, url]
-            newUser.set("photos", foundPhotos)
-            newUser.save()
-        })
-    }
-
-    removeFavorite(userId, url) {
-
-        this.findUser(userId).then(foundUser => {
-            let newUser = foundUser
-            let foundPhotos = newUser.get("photos")
-            foundPhotos = foundPhotos.filter(elem => elem !== url)
-            newUser.set("photos", foundPhotos)
-            newUser.save()
-        })
-    }
 }
 
 export default dbConn

@@ -124,6 +124,7 @@ app.patch('/users/:id/unfavorites/:url',(req,res) => {
     res.send(err)
   })
 })
+
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
 })
