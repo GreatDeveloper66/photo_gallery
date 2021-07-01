@@ -3,6 +3,7 @@ dotenv.config({path:'../.env'})
 import mongoose from 'mongoose'
 import UserSchema from '../schemas/User.js'
 import TokenSchema from '../schemas/Token.js'
+import jwt from "jsonwebtoken";
 
 class dbConn {
     constructor() {
@@ -36,14 +37,25 @@ class dbConn {
 
     loginUser(username, password) {
         const userModel = this.connection.model('User', UserSchema)
-        return userModel.findOne({username: username, password: password }).exec()
+        return userModel.findOne({username: username, password: password }).exec().then(foundUser => {
+            const userId = foundUser.get("_id")
+            const accessToken = jwt.sign({id: userId}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '20m'})
+            return accessToken
+        }).catch(err => {
+            console.log("error  " + err)
+            return err
+        })
     }
 
-    addToken(token) {
+    addToken(accessToken) {
         const tokenModel = this.connection.model('Token', TokenSchema)
         const newToken = new tokenModel()
-        newToken.set("token",token)
-        return newToken.save()
+        newToken.set("accessToken",accessToken)
+        return newToken.save().then(accessToken => {
+            return {"accessToken": accessToken.get("accessToken")}
+        }).catch(err => {
+            return err
+        })
     }
 
     deleteToken(token) {

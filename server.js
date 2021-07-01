@@ -36,23 +36,28 @@ function authenticateToken(req, res, next) {
 
 }
 
+app.post('/register',(req,res) => {
+  connection.addUser(req.body.email,req.body.username, req.body.password).then(foundUser => {
+    const userId = foundUser.get("_id")
+    const accessToken = jwt.sign({id: userId}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '20m'})
+    return connection.addToken(accessToken)
+  }).then(accessToken => {
+    res.send(accessToken)
+  }).catch(() => {
+    res.sendStatus(400)
+  })
+})
+
 app.post('/login', (req,res) => {
-  const username = req.body.username
-  const password = req.body.password
-  connection.loginUser(username, password).then(foundUser => {
-    const id = foundUser.get("_id")
-    const user = {userId: id }
-    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '20m'})
-    connection.addToken(accessToken).then(() => {
-      res.send({ accessToken: accessToken })
+  connection.loginUser(req.body.username, req.body.password).then(accessToken => {
+    return connection.addToken(accessToken)
+    }).then((accessToken) => {
+      res.send(accessToken)
     }).catch(() => {
       res.sendStatus(401)
     })
-
-  }).catch(() => {
-    res.sendStatus(401)
   })
-})
+
 
 app.delete('/logout', (req,res) => {
   const authHeader = req.headers['authorization']
@@ -89,13 +94,7 @@ app.get('/user/:id', authenticateToken, (req,res) => {
   })
 })
 
-app.post('/users',(req,res) => {
-  connection.addUser(req.body.email, req.body.username, req.body.password).then(() => {
-    res.sendStatus(200)
-  }).catch(() => {
-    res.sendStatus(400)
-  })
-})
+
 
 app.patch('/users/:id',authenticateToken, (req,res) => {
   const id = mongoose.Types.ObjectId(req.params.id)
@@ -173,5 +172,7 @@ app.patch('/users/:id/unfavorites/:url',authenticateToken,(req,res) => {
 app.get('*', (req,res) => {
   res.sendFile(path.join(path.resolve(), "client", "build", "index.html"))
 })
+
+
 const port = process.env.PORT || process.env.LOCAL_PORT
 app.listen(port, () => console.log(`listening on PORT: ${port}`))

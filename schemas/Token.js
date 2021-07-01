@@ -5,7 +5,7 @@ const ObjectId = Schema.ObjectId
 
 const TokenSchema = new Schema({
     userId: ObjectId,
-    token: String
+    accessToken: String
 })
 
 export default TokenSchema
