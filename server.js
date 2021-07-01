@@ -50,6 +50,9 @@ app.post('/register',(req,res) => {
 
 app.post('/login', (req,res) => {
   connection.loginUser(req.body.username, req.body.password).then(accessToken => {
+    if(!accessToken){
+      res.sendStatus(401)
+    }
     return connection.addToken(accessToken)
     }).then((accessToken) => {
       res.send(accessToken)

@@ -38,6 +38,10 @@ class dbConn {
     loginUser(username, password) {
         const userModel = this.connection.model('User', UserSchema)
         return userModel.findOne({username: username, password: password }).exec().then(foundUser => {
+            console.log("foundUser +  " + foundUser)
+            if(!foundUser) {
+                return null
+            }
             const userId = foundUser.get("_id")
             const accessToken = jwt.sign({id: userId}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '20m'})
             return accessToken
@@ -58,9 +62,9 @@ class dbConn {
         })
     }
 
-    deleteToken(token) {
+    deleteToken(accessToken) {
         const tokenModel = this.connection.model('Token', TokenSchema)
-        return tokenModel.deleteOne({token: token})
+        return tokenModel.deleteOne({accessToken: accessToken})
     }
 }
 
