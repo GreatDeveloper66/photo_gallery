@@ -25,11 +25,11 @@ function authenticateToken(req, res, next) {
   if(token == null) {
     return res.sendStatus(401)
   }
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err,user) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err, user) => {
     if(err) {
       return res.sendStatus(403)
     } else {
-      req.user = user
+      req.userId = user.id
       next()
     }
   })
@@ -72,6 +72,20 @@ app.delete('/logout', (req,res) => {
   })
 })
 
+app.get('/getUsersData', authenticateToken, (req,res) => {
+  const userId = req.userId
+  const id = mongoose.Types.ObjectId(userId)
+  connection.findUser(id).then(foundUser => {
+    const username = foundUser.username
+    const email = foundUser.email
+    const photos = foundUser.photos
+    console.log('hello')
+    res.send({ username: username, email: email, photos: photos })
+  }).catch(err => {
+    res.send(err)
+  })
+})
+
 app.get('/pics/:searchTerm', (req, res) => {
   let searchTerm = req.params.searchTerm
   const apiConnection = new apiConn()
@@ -88,14 +102,7 @@ app.get('/pic/:id', (req,res) => {
   })
 })
 
-app.get('/user/:id', authenticateToken, (req,res) => {
-  const id = mongoose.Types.ObjectId(req.params.id)
-  connection.findUser(id).then(foundUser => {
-    res.send(foundUser)
-  }).catch(err => {
-    res.send(err)
-  })
-})
+
 
 
 
