@@ -86,6 +86,26 @@ app.get('/getUsersData', authenticateToken, (req,res) => {
   })
 })
 
+app.patch('/updateUser',authenticateToken, (req,res) => {
+  const userId = req.userId
+  const id = mongoose.Types.ObjectId(userId)
+  const newUser = {
+    id: id,
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password
+  }
+  connection.findUser(id).then(result => {
+    connection.updateUser(result, newUser).then(() => {
+      res.sendStatus(200)
+    }).catch(() => {
+      res.sendStatus(400)
+    })
+  }).catch(() => {
+    res.sendStatus(400)
+  })
+})
+
 app.get('/pics/:searchTerm', (req, res) => {
   let searchTerm = req.params.searchTerm
   const apiConnection = new apiConn()
@@ -106,23 +126,7 @@ app.get('/pic/:id', (req,res) => {
 
 
 
-app.patch('/users/:id',authenticateToken, (req,res) => {
-  const id = mongoose.Types.ObjectId(req.params.id)
-  const newUser = {
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password
-  }
-  connection.findUser(id).then(result => {
-    connection.updateUser(result, newUser).then(() => {
-      res.sendStatus(200)
-    }).catch(() => {
-      res.sendStatus(400)
-    })
-  }).catch(() => {
-    res.sendStatus(400)
-  })
-})
+
 
 app.delete('/users/:id', authenticateToken, (req,res) => {
   const id = mongoose.Types.ObjectId(req.params.id)
